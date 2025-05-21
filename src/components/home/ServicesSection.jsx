@@ -510,7 +510,7 @@ export default function ServicesSection() {
                 className="min-w-[180px] flex-shrink-0 flex flex-col items-center"
               >
                 <div
-                  className="w-[150px] h-[150px] rounded-full border-2 border-gray-200
+                  className="w-[150px] h-[150px] rounded-full border-12 border-gray-400
                              overflow-hidden shadow-md hover:shadow-lg
                              transition-transform duration-300 hover:-translate-y-1"
                 >

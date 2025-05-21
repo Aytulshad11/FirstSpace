@@ -22,7 +22,7 @@ const Footer = () => {
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent-400 transition-colors duration-300">
                 <FaTwitter size={20} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent-400 transition-colors duration-300">
+              <a href="https://instagram.com/firstspace.home/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent-400 transition-colors duration-300">
                 <FaInstagram size={20} />
               </a>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent-400 transition-colors duration-300">
@@ -73,15 +73,15 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <FaPhone className="mt-1 text-accent-400 mr-3" />
+                <FaPhone className="mt-1 text-primary-500 mr-3" />
                 <span className="text-gray-300 text-sm">+1 (123) 456-7890</span>
               </li>
               <li className="flex items-start">
-                <FaEnvelope className="mt-1 text-accent-400 mr-3" />
+                <FaEnvelope className="mt-1 text-primary-500 mr-3" />
                 <span className="text-gray-300 text-sm">info@firstspace.com</span>
               </li>
               <li className="flex items-start">
-                <FaMapMarkerAlt className="mt-1 text-accent-400 mr-3" />
+                <FaMapMarkerAlt className="mt-1 text-primary-500 mr-3" />
                 <span className="text-gray-300 text-sm">
                   123 Dream Home Street,<br />
                   Architecture City, AC 12345
@@ -105,7 +105,7 @@ const Footer = () => {
               />
               <button 
                 type="submit" 
-                className="bg-accent-500 hover:bg-accent-600 text-white py-2 px-4 rounded-md transition-colors duration-300 text-sm"
+                className="bg-primary-500 hover:bg-primary-700 text-white py-2 px-4 rounded-md transition-colors duration-300 text-sm"
               >
                 Subscribe
               </button>
