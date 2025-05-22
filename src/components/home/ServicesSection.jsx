@@ -438,7 +438,97 @@
 // export default ServicesSection
 
 
-import { useEffect, useRef } from 'react'
+// import { useEffect, useRef } from 'react'
+
+// const services = [
+//   { id: 1, title: 'Floor Plan',       image: 'https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg' },
+//   { id: 2, title: 'Elevation',        image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg' },
+//   { id: 3, title: 'Interior Design',  image: 'https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg' },
+//   { id: 4, title: '3D Front Design',  image: 'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg' },
+//   { id: 5, title: 'Landscape',        image: 'https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg' },
+//   { id: 6, title: 'Modular Kitchen',  image: 'https://images.pexels.com/photos/280232/pexels-photo-280232.jpeg' },
+//   { id: 7, title: 'Living Room',      image: 'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg' },
+// ]
+
+// export default function ServicesSection() {
+//   const trackRef = useRef(null)
+//   const cardRef = useRef(null)
+
+//   useEffect(() => {
+//     const track = trackRef.current
+//     const cardW = cardRef.current.offsetWidth + 40 // card width + gap-10
+//     let scrollDelta = 0
+//     let pause = false
+//     let rafId
+
+//     const step = () => {
+//       if (!pause) {
+//         track.scrollLeft += 1
+//         scrollDelta += 1
+
+//         if (scrollDelta >= cardW) {
+//           scrollDelta = 0
+//           pause = true
+//           track.scrollLeft -= cardW
+//           track.append(track.firstElementChild)
+
+//           // Pause for 2 seconds
+//           setTimeout(() => {
+//             pause = false
+//             rafId = requestAnimationFrame(step)
+//           }, 2000)
+//           return
+//         }
+//       }
+
+//       rafId = requestAnimationFrame(step)
+//     }
+
+//     rafId = requestAnimationFrame(step)
+//     return () => cancelAnimationFrame(rafId)
+//   }, [])
+
+//   return (
+//     <section id="services" className="section-padding bg-white">
+//       <div className="container-custom">
+//         <div className="text-center mb-12">
+//           <h2 className="section-title">Our Services</h2>
+//           <p className="section-subtitle mx-auto">
+//             We provide a range of professional services to help you design your dream home.
+//           </p>
+//         </div>
+
+//         <div className="overflow-hidden">
+//           <div
+//             ref={trackRef}
+//             className="flex gap-10 overflow-x-hidden"
+//           >
+//             {services.map((s, i) => (
+//               <div
+//                 ref={i === 0 ? cardRef : undefined}
+//                 key={s.id}
+//                 className="min-w-[180px] flex-shrink-0 flex flex-col items-center"
+//               >
+//                 <div
+//                   className="w-[150px] h-[150px] rounded-full border-12 border-gray-400
+//                              overflow-hidden shadow-md hover:shadow-lg
+//                              transition-transform duration-300 hover:-translate-y-1"
+//                 >
+//                   <img src={s.image} alt={s.title} className="w-full h-full object-cover" />
+//                 </div>
+//                 <h3 className="mt-4 text-base font-semibold text-secondary-900 text-center">
+//                   {s.title}
+//                 </h3>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   )
+// }
+
+import { useEffect, useRef, useState } from 'react'
 
 const services = [
   { id: 1, title: 'Floor Plan',       image: 'https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg' },
@@ -446,75 +536,72 @@ const services = [
   { id: 3, title: 'Interior Design',  image: 'https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg' },
   { id: 4, title: '3D Front Design',  image: 'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg' },
   { id: 5, title: 'Landscape',        image: 'https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg' },
-  { id: 6, title: 'Modular Kitchen',  image: 'https://images.pexels.com/photos/280232/pexels-photo-280232.jpeg' },
-  { id: 7, title: 'Living Room',      image: 'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg' },
 ]
 
 export default function ServicesSection() {
   const trackRef = useRef(null)
   const cardRef = useRef(null)
+  const [paused, setPaused] = useState(false)
 
   useEffect(() => {
-    const track = trackRef.current
-    const cardW = cardRef.current.offsetWidth + 40 // card width + gap-10
-    let scrollDelta = 0
-    let pause = false
-    let rafId
+  const track = trackRef.current;
+  const cardW = cardRef.current.offsetWidth + 40; // 40 = gap-10
+  let intervalId;
 
-    const step = () => {
-      if (!pause) {
-        track.scrollLeft += 1
-        scrollDelta += 1
+  const startAutoScroll = () => {
+    intervalId = setInterval(() => {
+      if (paused || !track) return;
 
-        if (scrollDelta >= cardW) {
-          scrollDelta = 0
-          pause = true
-          track.scrollLeft -= cardW
-          track.append(track.firstElementChild)
+      // Animate left scroll with a slower, more natural transition
+      track.scrollBy({ left: cardW, behavior: 'smooth' });
 
-          // Pause for 2 seconds
-          setTimeout(() => {
-            pause = false
-            rafId = requestAnimationFrame(step)
-          }, 2000)
-          return
-        }
-      }
+      // Reorder cards for infinite loop after scroll animation completes
+      setTimeout(() => {
+        const first = track.children[0];
+        track.appendChild(first);
+        // Instantly reset scroll position without animation to avoid flicker
+        track.scrollTo({ left: track.scrollLeft - cardW, behavior: 'instant' });
+      }, 1000); // Match the CSS transition duration
+    }, 6000); // Slower interval (6 seconds)
+  };
 
-      rafId = requestAnimationFrame(step)
-    }
-
-    rafId = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(rafId)
-  }, [])
+  startAutoScroll();
+  return () => clearInterval(intervalId);
+}, [paused]);
 
   return (
-    <section id="services" className="section-padding bg-white">
-      <div className="container-custom">
+    <section className="section-padding bg-white">
+      <div className="px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32">
         <div className="text-center mb-12">
           <h2 className="section-title">Our Services</h2>
-          <p className="section-subtitle mx-auto">
+          <p className="section-subtitle mx-auto max-w-2xl">
             We provide a range of professional services to help you design your dream home.
           </p>
         </div>
 
         <div className="overflow-hidden">
           <div
-            ref={trackRef}
-            className="flex gap-10 overflow-x-hidden"
-          >
+              ref={trackRef}
+              className="flex gap-10 overflow-x-hidden scroll-smooth scroll-snap-x transition-all ease-in-out duration-1000"
+            >
             {services.map((s, i) => (
               <div
                 ref={i === 0 ? cardRef : undefined}
                 key={s.id}
-                className="min-w-[180px] flex-shrink-0 flex flex-col items-center"
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+                className="min-w-[180px] flex-shrink-0 flex flex-col items-center cursor-pointer scroll-snap-start"
               >
                 <div
-                  className="w-[150px] h-[150px] rounded-full border-12 border-gray-400
+                  className="w-[180px] h-[180px] rounded-full border-2 border-gray-300
                              overflow-hidden shadow-md hover:shadow-lg
                              transition-transform duration-300 hover:-translate-y-1"
                 >
-                  <img src={s.image} alt={s.title} className="w-full h-full object-cover" />
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-secondary-900 text-center">
                   {s.title}

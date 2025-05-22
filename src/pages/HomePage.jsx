@@ -5,6 +5,7 @@ import ProjectsGallery from '../components/home/ProjectsGallery'
 import StandardSizesSection from '../components/home/StandardSizesSection'
 import SuccessStories from '../components/home/SuccessStories'
 import OngoingProjects from '../components/home/OngoingProjects'
+import ReasonsToBuySection from '../pages/ReasonsToBuy';
 
 const HomePage = () => {
   return (
@@ -23,6 +24,7 @@ const HomePage = () => {
       <ProjectsGallery />
       <SuccessStories />
       <OngoingProjects />
+      <ReasonsToBuySection/>
     </div>
   )
 }
