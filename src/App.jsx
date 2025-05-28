@@ -8,6 +8,8 @@ import PropertyDetailPage from './pages/PropertyDetailPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import FloatingButtons from './components/ui/FloatingButtons'
+import InteriorEstimatorWizard from "./pages/InteriorEstimatorWizard";
+import KitchenEstimatorWizard from "./pages/KitchenEstimatorWizard";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/property/:id" element={<PropertyDetailPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/kitchen" element={<KitchenEstimatorWizard />} />
+            <Route path="/home" element={<InteriorEstimatorWizard />} />
           </Routes>
         </main>
         
@@ -39,4 +43,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
